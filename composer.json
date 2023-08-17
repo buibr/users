@@ -1,0 +1,35 @@
+{
+  "name": "buibr/users",
+  "description": "User Accounts Roles Permissions models for laravel applications",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Burhan Ibrahimi",
+      "email": "mail@buib.me",
+      "homepage": "https://www.buib.me",
+      "role": "creator"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=8.2",
+    "spatie/laravel-permission": "@dev",
+    "spatie/laravel-medialibrary": "@dev",
+    "buibr/helpers": "^1.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bi\\Users\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bi\\Users\\UsersProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.4@dev"
+  }
+}
