@@ -15,11 +15,12 @@ class UsersProvider extends ServiceProvider
         if (function_exists('config_path')) { // function not available and 'publish' not relevant in Lumen
             $this->publishes([
                 __DIR__ . '/../config/bi-users.php' => config_path('bi-users.php'),
-            ], 'bi-user/config');
+                __DIR__ . '/../config/bi-accounts.php' => config_path('bi-accounts.php'),
+            ], 'config');
 
             $this->publishes([
                 __DIR__ . '/../migrations/' => database_path('/migrations/bi-user/'),
-            ], 'bi-user/migrations');
+            ], 'migrations');
         }
 
         $this->commands([
@@ -30,10 +31,8 @@ class UsersProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/bi-users.php',
-            'bi-users'
-        );
+        $this->mergeConfigFrom(__DIR__ . '/../config/bi-users.php', 'bi-users');
+        $this->mergeConfigFrom(__DIR__ . '/../config/bi-accounts.php', 'bi-accounts');
     }
 
     private function bootObservers(): void
