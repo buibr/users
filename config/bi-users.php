@@ -1,5 +1,6 @@
 <?php
 
+use Bi\Users\User;
 use Bi\Users\Enums\RoleEnum;
 use Bi\Users\Enums\PermissionEnum;
 use Bi\Users\Enums\RolePermissions;
@@ -14,7 +15,7 @@ return [
     | You can change the user model or extend the default one from this plugin
     |
     */
-    'model'       => \Bi\Users\User::class,
+    'model'       => User::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +58,7 @@ return [
         | create your own enum class and define roles
         |
         */
-        'roles'            => RoleEnum::toArray(),
+        'roles'            => RoleEnum::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ return [
         | create your own enum class and define permissions
         |
         */
-        'permissions'      => PermissionEnum::toArray(),
+        'permissions'      => PermissionEnum::class,
 
         /*
         |--------------------------------------------------------------------------
