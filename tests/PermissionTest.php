@@ -1,11 +1,10 @@
 <?php
 
-use Bi\Users\User;
 use Bi\Users\Enums\RoleEnum;
-use Bi\Users\Enums\PermissionEnum;
+use PHPUnit\Framework\TestCase;
 use Bi\Users\Enums\RolePermissions;
 
-class PermissionTest extends \PHPUnit\Framework\TestCase
+class PermissionTest extends TestCase
 {
     public function testFile()
     {
