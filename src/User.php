@@ -2,9 +2,10 @@
 
 namespace Bi\Users;
 
-use Spatie\MediaLibrary\HasMedia;
 use Bi\Users\Traits\HasAvatar;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\Image\Exceptions\InvalidManipulation;
@@ -111,6 +112,4 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
         return $this->syncRoles(request()->input($name));
     }
-
-
 }

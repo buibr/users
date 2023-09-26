@@ -3,11 +3,12 @@
 namespace Bi\Users\Enums;
 
 use Spatie\Permission\Models\Permission;
+use Bi\Users\Interfaces\PermissionInterface;
 use Bi\Helpers\Traits\Enum\ArrayableEnumTrait;
 use Bi\Helpers\Traits\Enum\RandomableEnumTrait;
 use Bi\Helpers\Traits\Enum\FilterableEnumTrait;
 
-enum PermissionEnum : string
+enum PermissionEnum : string implements PermissionInterface
 {
     use ArrayableEnumTrait, RandomableEnumTrait, FilterableEnumTrait;
 
@@ -74,7 +75,7 @@ enum PermissionEnum : string
     /**
      * @return mixed
      */
-    public function getObject()
+    public function getObject() : Permission
     {
         return Permission::where('name', $this->value)->first();
     }

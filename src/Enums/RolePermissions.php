@@ -2,6 +2,7 @@
 
 namespace Bi\Users\Enums;
 
+use Bi\Users\Interfaces\RoleInterface;
 use Bi\Users\Interfaces\RolePermissionsInterface;
 
 class RolePermissions implements RolePermissionsInterface
@@ -17,7 +18,7 @@ class RolePermissions implements RolePermissionsInterface
         return $list;
     }
 
-    public static function permissions(RoleEnum $role): iterable
+    public static function permissions(RoleInterface $role): iterable
     {
         return match ($role) {
             RoleEnum::MASTER => self::masterPermissions(),

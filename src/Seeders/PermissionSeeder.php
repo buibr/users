@@ -7,7 +7,9 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Bi\Users\Exception\BiException;
 use Illuminate\Support\Facades\Log;
+use Bi\Users\Interfaces\RoleInterface;
 use Spatie\Permission\Models\Permission;
+use TreeDepo\Account\Enums\UserRoleEnum;
 use Spatie\Permission\PermissionRegistrar;
 use Bi\Users\Interfaces\RolePermissionsInterface;
 
@@ -34,7 +36,7 @@ class PermissionSeeder extends Seeder
     {
         $roles = config('bi-users.rbac.roles');
 
-        if(my_is_enum($roles)){
+        if (my_is_enum($roles)) {
             $roles = $roles::cases();
         }
 
@@ -43,7 +45,7 @@ class PermissionSeeder extends Seeder
 
             $name = null;
 
-            if( is_string( $role)){
+            if (is_string($role)) {
                 $name = $role;
             }
 
@@ -51,7 +53,7 @@ class PermissionSeeder extends Seeder
                 $name = isset($role->value) ? $role->value : $role->name;
             }
 
-            if(!$name){
+            if (!$name) {
                 throw new BiException('Invalid role name');
             }
 
@@ -74,7 +76,7 @@ class PermissionSeeder extends Seeder
 
             $name = null;
 
-            if(is_string($permission)){
+            if (is_string($permission)) {
                 $name = $permission;
             }
 
@@ -82,7 +84,7 @@ class PermissionSeeder extends Seeder
                 $name = isset($permission->value) ? $permission->value : $permission->name;
             }
 
-            if(!$name){
+            if (!$name) {
                 throw new BiException('Invalid permission name');
             }
 
@@ -94,13 +96,24 @@ class PermissionSeeder extends Seeder
 
     private function getLinked(Role $role)
     {
-        $connection = config('bi-users.rbac.role_permissions');
+        /** @var UserRoleEnum $roles */
+        $roles = config('bi-users.rbac.roles');
+        $enumRole = collect($roles::cases())->first(fn(RoleInterface $i) => $i->name === $role->name);
 
-        if (is_a($connection, RolePermissionsInterface::class)) {
-            return $connection::permissions($role->name);
+        $connection = config('bi-users.rbac.role_permissions');
+        if (is_string($connection) && class_exists($connection)) {
+            $connection = new $connection;
+
+            if (is_a($connection, RolePermissionsInterface::class)) {
+                return $connection::permissions($enumRole);
+            }
         }
 
-        return $connection[$role->name];
+        if (is_array($connection)) {
+            return $connection[$enumRole];
+        }
+
+        throw new BiException('Role permission exception is not found.');
     }
 
     private function doConnect(Role $role, iterable $permissions)

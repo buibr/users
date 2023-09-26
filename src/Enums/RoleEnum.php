@@ -3,11 +3,12 @@
 namespace Bi\Users\Enums;
 
 use Spatie\Permission\Models\Role;
+use Bi\Users\Interfaces\RoleInterface;
 use Bi\Helpers\Traits\Enum\ArrayableEnumTrait;
 use Bi\Helpers\Traits\Enum\RandomableEnumTrait;
 use Bi\Helpers\Traits\Enum\FilterableEnumTrait;
 
-enum RoleEnum
+enum RoleEnum implements RoleInterface
 {
     use ArrayableEnumTrait, RandomableEnumTrait, FilterableEnumTrait;
 
