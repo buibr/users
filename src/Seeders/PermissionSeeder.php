@@ -107,9 +107,16 @@ class PermissionSeeder extends Seeder
             if (is_a($connection, RolePermissionsInterface::class)) {
                 return $connection::permissions($enumRole);
             }
+
+            throw new BiException('Role permission relation problem.');
         }
 
         if (is_array($connection)) {
+
+            if(!isset($connection[$enumRole])){
+                throw new BiException('Role to permission relation is not defined. Please see config.');
+            }
+
             return $connection[$enumRole];
         }
 
