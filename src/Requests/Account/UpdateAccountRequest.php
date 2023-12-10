@@ -2,6 +2,7 @@
 
 namespace TreeDepo\Account\Requests\Account;
 
+use Bi\Users\Enums\AccountTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAccountRequest extends FormRequest
@@ -21,8 +22,14 @@ class UpdateAccountRequest extends FormRequest
      */
     public function rules(): array
     {
+        $enum = config('bi-users.account.types') ?? AccountTypeEnum::class;
+
+        if (my_is_enum($enum)) {
+            $enum = $enum::toArray();
+        }
+
         return [
-            'type'      => ['string'],
+            'type'      => ['required', Rule::in($enum)],
             'uuid'      => ['uuid'],
             'username'  => ['string'],
             'full_name' => ['string'],

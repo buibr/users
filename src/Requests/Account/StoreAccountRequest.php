@@ -1,23 +1,23 @@
 <?php
 
-namespace TreeDepo\Account\Requests\Account;
+namespace Bi\Users\Requests\Account;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use TreeDepo\Account\Enums\AccountTypeEnum;
+use Bi\Users\Enums\AccountTypeEnum;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAccountRequest extends FormRequest
 {
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
+        $enum = config('bi-users.account.types') ?? AccountTypeEnum::class;
+
+        if (my_is_enum($enum)) {
+            $enum = $enum::toArray();
+        }
+
         return [
-            'type'      => ['required', Rule::in(AccountTypeEnum::toArray())],
+            'type'      => ['required', Rule::in($enum)],
             'uuid'      => ['uuid'],
             'username'  => ['required', 'string'],
             'full_name' => ['string'],
