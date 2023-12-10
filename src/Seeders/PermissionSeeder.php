@@ -28,7 +28,6 @@ class PermissionSeeder extends Seeder
 
             $this->doConnect($role, $connection);
         }
-
     }
 
     private function createRoles(): array
@@ -41,7 +40,6 @@ class PermissionSeeder extends Seeder
 
         $list = [];
         foreach ($roles as $role) {
-
             $name = null;
 
             if (is_string($role)) {
@@ -72,7 +70,6 @@ class PermissionSeeder extends Seeder
 
         $list = [];
         foreach ($permissions as $key => $permission) {
-
             $name = null;
 
             if (is_string($permission)) {
@@ -111,8 +108,7 @@ class PermissionSeeder extends Seeder
         }
 
         if (is_array($connection)) {
-
-            if(!isset($connection[$enumRole])){
+            if (!isset($connection[$enumRole])) {
                 throw new BiException('Role to permission relation is not defined. Please see config.');
             }
 
@@ -126,7 +122,6 @@ class PermissionSeeder extends Seeder
     {
         try {
             foreach ($permissions as $i => $permission) {
-
                 $permissionObject = null;
 
                 if (is_string($permission)) {
@@ -151,7 +146,6 @@ class PermissionSeeder extends Seeder
     private function permissionsFromEnum(array $permissions)
     {
         foreach ($permissions::cases() as $key => $permission) {
-
             $name = $permission;
 
             if (my_is_enum($permission)) {

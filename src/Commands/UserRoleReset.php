@@ -2,7 +2,7 @@
 
 namespace Bi\Users\Commands;
 
-use Bi\Users\User;
+use Bi\Users\Models\User;
 use Illuminate\Console\Command;
 
 class UserRoleReset extends Command

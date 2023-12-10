@@ -2,7 +2,7 @@
 
 namespace Bi\Users\Observers;
 
-use Bi\Users\Account;
+use Bi\Users\Models\Account;
 
 class AccountObserver
 {

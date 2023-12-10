@@ -2,7 +2,11 @@
 
 namespace Bi\Users\Observers;
 
-use Bi\Users\User;
+use Bi\Users\Models\User;
+use Bi\Users\Events\UserCreated;
+use Bi\Users\Events\UserUpdated;
+use Bi\Users\Events\UserDeleted;
+use Illuminate\Support\Facades\Event;
 
 class UserObserver
 {
@@ -11,9 +15,9 @@ class UserObserver
         // ...
     }
 
-    public function created(User $channel): void
+    public function created(User $user): void
     {
-        // ...
+        Event::dispatch(new UserCreated($user));
     }
 
     public function updating(User $user)
@@ -26,20 +30,20 @@ class UserObserver
 
     public function updated(User $user): void
     {
-        // ...
+        Event::dispatch(new UserUpdated($user));
     }
 
-    public function deleted(User $User): void
+    public function deleted(User $user): void
+    {
+        Event::dispatch(new UserDeleted($user));
+    }
+
+    public function restored(User $user): void
     {
         // ...
     }
 
-    public function restored(User $User): void
-    {
-        // ...
-    }
-
-    public function forceDeleted(User $User): void
+    public function forceDeleted(User $user): void
     {
         // ...
     }

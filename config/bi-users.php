@@ -1,6 +1,6 @@
 <?php
 
-use Bi\Users\User;
+use Bi\Users\Models\User;
 use Bi\Users\Enums\RoleEnum;
 use Bi\Users\Enums\PermissionEnum;
 use Bi\Users\Enums\RolePermissions;
@@ -65,7 +65,7 @@ return [
         | class and this with your full class name.
         |
         */
-        'model' => \Bi\Users\Account::class,
+        'model' => \Bi\Users\Models\Account::class,
 
         /*
         |--------------------------------------------------------------------------

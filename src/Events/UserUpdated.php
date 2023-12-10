@@ -5,7 +5,7 @@ namespace Bi\Users\Events;
 use Bi\Users\Models\User;
 use Illuminate\Queue\SerializesModels;
 
-class UserCreated
+class UserUpdated
 {
     use Dispatchable;
     use InteractsWithSockets;

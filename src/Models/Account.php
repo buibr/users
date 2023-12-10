@@ -1,6 +1,6 @@
 <?php
 
-namespace Bi\Users;
+namespace Bi\Users\Models;
 
 use Bi\Users\Enums\AccountTypeEnum;
 use Bi\Users\Factories\AccountFactory;

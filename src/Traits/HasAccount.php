@@ -2,9 +2,12 @@
 
 namespace NRB\Users\Traits;
 
-use Bi\Users\Account;
+use Bi\Users\Models\Account;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property Account $account
+ */
 trait HasAccount
 {
     public function initializeHasAccount()
