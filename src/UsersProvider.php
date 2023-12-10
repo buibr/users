@@ -31,6 +31,8 @@ class UsersProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/bi-users.php', 'bi-users');
+
+        $this->bootObservers();
     }
 
     private function bootObservers(): void

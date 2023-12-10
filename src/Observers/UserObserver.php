@@ -2,52 +2,44 @@
 
 namespace Bi\Users\Observers;
 
-use Bi\Users\Account;
+use Bi\Users\User;
 
 class UserObserver
 {
-    public function saving(Account $model)
+    public function saving(User $model)
     {
-        if (!$model->uuid) {
-            $model->uuid = uuid_create();
+        // ...
+    }
+
+    public function created(User $channel): void
+    {
+        // ...
+    }
+
+    public function updating(User $user)
+    {
+        if (array_key_exists('email', $user->getChanges())) {
+            $user->email_verified_at = null;
+            $user->sendEmailVerificationNotification();
         }
     }
 
-    /**
-     * Handle the Account "created" event.
-     */
-    public function created(Account $channel): void
-    {
-    }
-
-    /**
-     * Handle the Account "updated" event.
-     */
-    public function updated(Account $channel): void
+    public function updated(User $user): void
     {
         // ...
     }
 
-    /**
-     * Handle the Account "deleted" event.
-     */
-    public function deleted(Account $channel): void
+    public function deleted(User $User): void
     {
         // ...
     }
 
-    /**
-     * Handle the Account "restored" event.
-     */
-    public function restored(Account $channel): void
+    public function restored(User $User): void
     {
         // ...
     }
 
-    /**
-     * Handle the Account "forceDeleted" event.
-     */
-    public function forceDeleted(Account $channel): void
+    public function forceDeleted(User $User): void
     {
         // ...
     }

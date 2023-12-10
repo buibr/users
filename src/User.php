@@ -13,12 +13,32 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
+/**
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $api_token
+ * @property string $remember_token
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
+ *
+ * @static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @static \Illuminate\Database\Eloquent\Builder|NRBUser permission($permissions)
+ * @static \Illuminate\Database\Eloquent\Builder|User query()
+ * @static \Illuminate\Database\Eloquent\Builder|NRBUser role($roles, $guard = null)
+ *
+ */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
-    use Notifiable, MustVerifyEmailTrait, HasFactory, HasRoles, InteractsWithMedia, HasAvatar;
+    use Notifiable;
+    use MustVerifyEmailTrait;
+    use HasFactory;
+    use HasRoles;
+    use InteractsWithMedia;
+    use HasAvatar;
 
     /**
      * @var array
@@ -46,17 +66,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @return mixed
-     */
     public static function newFactory()
     {
         return Factories\UserFactory::new();
     }
 
-    /**
-     * @return void
-     */
     protected static function boot(): void
     {
         parent::boot();
@@ -69,11 +83,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         });
     }
 
-    /**
-     * @param Media|null $media
-     *
-     * @throws InvalidManipulation
-     */
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('avatar')
@@ -82,34 +91,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             ->nonQueued();
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Media|null
-     * @throws FileDoesNotExist
-     * @throws FileIsTooBig
-     */
-    public function updateAvatarFromRequest(string $name)
+    public function updateRolesFromRequest(string $inputKey) : ?self
     {
-        if (!request()->hasFile($name)) {
+        if (!request()->filled($inputKey)) {
             return null;
         }
 
-        $this->clearMediaCollection();
+        $inputValue = request()->input($inputKey);
 
-        return $this->addMediaFromRequest($name)->toMediaCollection();
-    }
-
-    /**
-     * @param string $name
-     * @return User|null
-     */
-    public function updateRolesFromRequest(string $name)
-    {
-        if (!request()->filled($name)) {
-            return null;
-        }
-
-        return $this->syncRoles(request()->input($name));
+        return $this->syncRoles($inputValue);
     }
 }
