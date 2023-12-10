@@ -19,17 +19,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Using
-    |--------------------------------------------------------------------------
-    |
-    | Using accounts as belong to on users. If this is disabled then
-    | account model will be ignored and should not be used.
-    |
-    */
-    'use_account' => true,
-
-    /*
-    |--------------------------------------------------------------------------
     | Delete method
     |--------------------------------------------------------------------------
     |
@@ -37,6 +26,58 @@ return [
     |
     */
     'soft_delete' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Role based access control
+    |--------------------------------------------------------------------------
+    |
+    | Defining user roles and permissions that should be attached.
+    |
+    */
+    'account'     => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enable
+        |--------------------------------------------------------------------------
+        |
+        | Using accounts as higher level or relations. If this is disabled then
+        | account model will be ignored and should not be used.
+        |
+        */
+        'enable' => env('BI_ACCOUNT_ENABLE', true),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Table
+        |--------------------------------------------------------------------------
+        |
+        */
+        'table' => env('BI_ACCOUNT_TABLE', 'accounts'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Account model
+        |--------------------------------------------------------------------------
+        |
+        | You can create your own methods by extending this \NRB\Address\Address
+        | class and this with your full class name.
+        |
+        */
+        'model' => \Bi\Users\Account::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Type of Accounts
+        |--------------------------------------------------------------------------
+        |
+        | You can create your own methods by extending this \NRB\Address\Address
+        | class and this with your full class name.
+        |
+        */
+        'types' => \Bi\Users\Enums\AccountTypeEnum::class
+    ],
 
 
     /*

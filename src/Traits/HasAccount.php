@@ -14,7 +14,7 @@ trait HasAccount
 
     public function account(): BelongsTo
     {
-        return $this->belongsTo(config('bi-accounts.model'));
+        return $this->belongsTo(config('bi-users.account.model'));
     }
 
 }

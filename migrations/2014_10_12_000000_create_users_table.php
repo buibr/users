@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('password');
             $table->rememberToken();
 
-            if (config('bi-users.use_account')) {
+            if (config('bi-users.account.enable')) {
                 // relations
                 $table->foreignIdFor(Account::class)->nullable();
             }

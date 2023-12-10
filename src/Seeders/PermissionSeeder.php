@@ -9,7 +9,6 @@ use Bi\Users\Exception\BiException;
 use Illuminate\Support\Facades\Log;
 use Bi\Users\Interfaces\RoleInterface;
 use Spatie\Permission\Models\Permission;
-use TreeDepo\Account\Enums\UserRoleEnum;
 use Spatie\Permission\PermissionRegistrar;
 use Bi\Users\Interfaces\RolePermissionsInterface;
 
@@ -96,7 +95,7 @@ class PermissionSeeder extends Seeder
 
     private function getLinked(Role $role)
     {
-        /** @var UserRoleEnum $roles */
+        /** @var [RoleInterface] $roles */
         $roles = config('bi-users.rbac.roles');
         $enumRole = collect($roles::cases())->first(fn(RoleInterface $i) => $i->name === $role->name);
 
