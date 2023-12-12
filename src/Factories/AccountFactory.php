@@ -3,6 +3,7 @@
 namespace Bi\Users\Factories;
 
 use Bi\Users\Models\Account;
+use Bi\Users\Enums\AccountTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccountFactory extends Factory
@@ -12,7 +13,7 @@ class AccountFactory extends Factory
     public function definition(): array
     {
         return [
-            'type'      => \Bi\Users\Enums\AccountTypeEnum::USER->name,
+            'type'      => AccountTypeEnum::USER->name,
             'uuid'      => uuid_create(UUID_TYPE_TIME),
             'full_name' => fake()->name(),
             'username'  => fake()->userName(),

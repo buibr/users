@@ -36,10 +36,7 @@ class Account extends Model implements AccountContract
         'type' => AccountTypeEnum::class,
     ];
 
-    /**
-     * @return AccountFactory
-     */
-    public static function newFactory()
+    protected static function newFactory(): AccountFactory
     {
         return AccountFactory::new();
     }

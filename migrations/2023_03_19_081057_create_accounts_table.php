@@ -19,9 +19,16 @@ return new class extends Migration {
 
     public function up(): void
     {
-        Schema::create($this->table, function (Blueprint $table) {
+        if (! $this->enable) {
+            return;
+        }
+
+        $types = ($this->types)::toArray();
+        $defaultType = collect($types)->first();
+
+        Schema::create($this->table, function (Blueprint $table) use($types, $defaultType) {
             $table->id();
-            $table->enum('type', $this->types::toArray())->default(collect($this->types::casses())->first()->name)->index();
+            $table->enum('type', $types)->default($defaultType)->index();
             $table->uuid('uuid')->unique('unique');
             $table->string('full_name');
             $table->string('username')->unique('username');

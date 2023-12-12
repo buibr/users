@@ -54,7 +54,7 @@ return [
         |--------------------------------------------------------------------------
         |
         */
-        'table' => env('BI_ACCOUNT_TABLE', 'accounts'),
+        'table'  => env('BI_ACCOUNT_TABLE', 'accounts'),
 
         /*
         |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
         | class and this with your full class name.
         |
         */
-        'model' => \Bi\Users\Models\Account::class,
+        'model'  => \Bi\Users\Models\Account::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
         | class and this with your full class name.
         |
         */
-        'types' => \Bi\Users\Enums\AccountTypeEnum::class
+        'types'  => \Bi\Users\Enums\AccountTypeEnum::class,
     ],
 
 
@@ -129,6 +129,6 @@ return [
         | ]
         |
         */
-        'role_permissions' => RolePermissions::toArray(),
+        'role_permissions' => RolePermissions::class,
     ],
 ];

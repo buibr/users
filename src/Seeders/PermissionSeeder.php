@@ -3,8 +3,9 @@
 namespace Bi\Users\Seeders;
 
 use Exception;
+use Bi\Users\Enums\RoleEnum;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Bi\Users\Exception\BiException;
 use Illuminate\Support\Facades\Log;
 use Bi\Users\Interfaces\RoleInterface;
@@ -22,7 +23,7 @@ class PermissionSeeder extends Seeder
         $roles = $this->createRoles();
         $permissions = $this->createPermissions();
 
-        /** @var Role $role */
+        /** @var SpatieRole $role */
         foreach ($roles as $role) {
             $connection = $this->getLinked($role);
 
@@ -54,7 +55,7 @@ class PermissionSeeder extends Seeder
                 throw new BiException('Invalid role name');
             }
 
-            $list[$name] = Role::findOrCreate($name);
+            $list[$name] = SpatieRole::findOrCreate($name);
         }
 
         return $list;
@@ -90,35 +91,32 @@ class PermissionSeeder extends Seeder
         return $list;
     }
 
-    private function getLinked(Role $role)
+    private function getLinked(SpatieRole $role)
     {
-        /** @var [RoleInterface] $roles */
+        /** @var RoleInterface[] $roles */
         $roles = config('bi-users.rbac.roles');
-        $enumRole = collect($roles::cases())->first(fn(RoleInterface $i) => $i->name === $role->name);
+
+        /** @var RoleEnum $enumRole */
+        $enumRole = $roles::from($role->name);
 
         $connection = config('bi-users.rbac.role_permissions');
-        if (is_string($connection) && class_exists($connection)) {
-            $connection = new $connection;
 
-            if (is_a($connection, RolePermissionsInterface::class)) {
-                return $connection::permissions($enumRole);
-            }
-
-            throw new BiException('Role permission relation problem.');
+        if(is_string($connection) && my_is_enum($connection) && is_a($connection, RolePermissionsInterface::class)){
+            $connection = $connection::toArray();
         }
 
         if (is_array($connection)) {
-            if (!isset($connection[$enumRole])) {
+            if (!isset($connection[$enumRole->value])) {
                 throw new BiException('Role to permission relation is not defined. Please see config.');
             }
 
-            return $connection[$enumRole];
+            return $connection[$enumRole->value];
         }
 
-        throw new BiException('Role permission exception is not found.');
+        throw new BiException('Role permission is not found.');
     }
 
-    private function doConnect(Role $role, iterable $permissions)
+    private function doConnect(SpatieRole $role, iterable $permissions)
     {
         try {
             foreach ($permissions as $i => $permission) {

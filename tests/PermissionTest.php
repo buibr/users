@@ -13,4 +13,11 @@ class PermissionTest extends TestCase
         self::assertSame($links[RoleEnum::MASTER->name], RolePermissions::permissions(RoleEnum::MASTER));
     }
 
+    //public function test_seeder()
+    //{
+    //    $seeder = new \Bi\Users\Seeders\PermissionSeeder();
+    //    $list = $seeder->run();
+    //
+    //    dd( $list );
+    //}
 }

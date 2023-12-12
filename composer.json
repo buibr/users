@@ -23,7 +23,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Bi\\Users\\": "src"
+      "Bi\\Users\\": "src",
+      "Bi\\Users\\Tests\\": "tests"
     }
   },
   "extra": {
@@ -34,6 +35,7 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^10.4@dev"
+    "phpunit/phpunit": "^10.4@dev",
+    "orchestra/testbench": "dev-develop"
   }
 }

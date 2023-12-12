@@ -8,22 +8,22 @@ use Bi\Helpers\Traits\Enum\ArrayableEnumTrait;
 use Bi\Helpers\Traits\Enum\RandomableEnumTrait;
 use Bi\Helpers\Traits\Enum\FilterableEnumTrait;
 
-enum RoleEnum implements RoleInterface
+enum RoleEnum: string implements RoleInterface
 {
     use ArrayableEnumTrait, RandomableEnumTrait, FilterableEnumTrait;
 
-    case MASTER;
+    case MASTER = 'master';
 
-    case ADMIN;
+    case ADMIN = 'admin';
 
-    case ACCOUNTANT;
+    case ACCOUNTANT = 'accountant';
 
-    case CONTRACTOR;
+    case CONTRACTOR = 'contractor';
 
-    case CUSTOMER;
+    case CUSTOMER = 'customer';
 
     public function getObject()
     {
-        return Role::where('name', $this->name)->first();
+        return Role::where('name', $this->value)->first();
     }
 }

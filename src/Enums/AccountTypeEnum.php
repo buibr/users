@@ -2,7 +2,6 @@
 
 namespace Bi\Users\Enums;
 
-
 use Bi\Helpers\Traits\Enum\ArrayableEnumTrait;
 use Bi\Helpers\Traits\Enum\RandomableEnumTrait;
 use Bi\Helpers\Traits\Enum\FilterableEnumTrait;

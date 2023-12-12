@@ -4,11 +4,11 @@ namespace Bi\Users\Models;
 
 use Bi\Users\Traits\HasAvatar;
 use Spatie\MediaLibrary\HasMedia;
+use Bi\Users\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,18 +40,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     use InteractsWithMedia;
     use HasAvatar;
 
-    /**
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -59,16 +53,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'api_token',
     ];
 
-    /**
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
     public static function newFactory()
     {
-        return Factories\UserFactory::new();
+        return UserFactory::new();
     }
 
     protected static function boot(): void
@@ -91,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             ->nonQueued();
     }
 
-    public function updateRolesFromRequest(string $inputKey) : ?self
+    public function updateRolesFromRequest(string $inputKey): ?self
     {
         if (!request()->filled($inputKey)) {
             return null;

@@ -3,6 +3,7 @@
 namespace Bi\Users\Factories;
 
 use Illuminate\Support\Str;
+use Bi\Users\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
@@ -20,7 +21,7 @@ class UserFactory extends Factory
         ];
 
         if (config('bi-users.account.enable')) {
-            $data['account_id'] = AccountFactory::new()->create()->id;
+            $data['account_id'] = Account::factory()->create()->id;
         }
 
         return $data;
