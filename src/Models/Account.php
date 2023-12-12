@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Bi\Users\Interfaces\AccountContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -36,7 +37,7 @@ class Account extends Model implements AccountContract
         'type' => AccountTypeEnum::class,
     ];
 
-    protected static function newFactory(): AccountFactory
+    protected static function newFactory(): Factory
     {
         return AccountFactory::new();
     }
