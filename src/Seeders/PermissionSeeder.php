@@ -5,12 +5,12 @@ namespace Bi\Users\Seeders;
 use Exception;
 use Bi\Users\Enums\RoleEnum;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role as SpatieRole;
 use Bi\Users\Exception\BiException;
 use Illuminate\Support\Facades\Log;
 use Bi\Users\Interfaces\RoleInterface;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Bi\Users\Interfaces\RolePermissionsInterface;
 
 class PermissionSeeder extends Seeder
@@ -101,19 +101,21 @@ class PermissionSeeder extends Seeder
 
         $connection = config('bi-users.rbac.role_permissions');
 
-        if(is_string($connection) && my_is_enum($connection) && is_a($connection, RolePermissionsInterface::class)){
-            $connection = $connection::toArray();
+        $permissions = [];
+
+        if (class_exists($connection)) {
+            $connection = new $connection;
+
+            if(is_a($connection, RolePermissionsInterface::class)) {
+                $permissions =  $connection::permissions($enumRole);
+            }
         }
 
         if (is_array($connection)) {
-            if (!isset($connection[$enumRole->value])) {
-                throw new BiException('Role to permission relation is not defined. Please see config.');
-            }
-
-            return $connection[$enumRole->value];
+            $permissions  = $connection[$enumRole->value] ?? [];
         }
 
-        throw new BiException('Role permission is not found.');
+        return $permissions ?? [];
     }
 
     private function doConnect(SpatieRole $role, iterable $permissions)
