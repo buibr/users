@@ -106,13 +106,13 @@ class PermissionSeeder extends Seeder
         if (class_exists($connection)) {
             $connection = new $connection;
 
-            if(is_a($connection, RolePermissionsInterface::class)) {
-                $permissions =  $connection::permissions($enumRole);
+            if (is_a($connection, RolePermissionsInterface::class)) {
+                $permissions = $connection::permissions($enumRole);
             }
         }
 
         if (is_array($connection)) {
-            $permissions  = $connection[$enumRole->value] ?? [];
+            $permissions = $connection[$enumRole->value] ?? [];
         }
 
         return $permissions ?? [];

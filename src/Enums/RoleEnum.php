@@ -22,8 +22,9 @@ enum RoleEnum: string implements RoleInterface
 
     case CUSTOMER = 'customer';
 
-    public function getObject()
+    public function getObject(): ?Role
     {
+        /** @phpstan-ignore-next-line */
         return Role::where('name', $this->value)->first();
     }
 }

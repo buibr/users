@@ -13,11 +13,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int id
- * @property string type
+ * @property AccountTypeEnum type
  * @property string uuid
  * @property string full_name
  * @property string username
- * @property string active
+ * @property bool active
  *
  * @property User[] $users
  */
@@ -33,8 +33,10 @@ class Account extends Model implements AccountContract
         'active',
     ];
 
+    /** @var string[] */
     protected $casts = [
-        'type' => AccountTypeEnum::class,
+        'type'   => AccountTypeEnum::class,
+        'active' => 'boolean',
     ];
 
     protected static function newFactory(): Factory

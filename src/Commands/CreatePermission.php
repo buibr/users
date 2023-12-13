@@ -13,7 +13,7 @@ class CreatePermission extends Command
 
     protected $description = 'Create a permission';
 
-    public function handle()
+    public function handle(): void
     {
         $permissionClass = app(PermissionContract::class);
 

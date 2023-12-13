@@ -30,6 +30,7 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
  * @static \Illuminate\Database\Eloquent\Builder|NRBUser permission($permissions)
  * @static \Illuminate\Database\Eloquent\Builder|User query()
  * @static \Illuminate\Database\Eloquent\Builder|NRBUser role($roles, $guard = null)
+ * @static where(string $string, string $string1, string $string2)
  *
  */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia

@@ -2,11 +2,15 @@
 
 namespace Bi\Users\Enums;
 
+use Illuminate\Support\Collection;
 use Bi\Users\Interfaces\RoleInterface;
 use Bi\Users\Interfaces\RolePermissionsInterface;
 
 class RolePermissions implements RolePermissionsInterface
 {
+    /**
+     * @return array<string, iterable<int, \Bi\Users\Enums\PermissionEnum>>
+     */
     public static function toArray(): array
     {
         $list = [];
@@ -18,8 +22,12 @@ class RolePermissions implements RolePermissionsInterface
         return $list;
     }
 
+    /**
+     * @return array<int, PermissionEnum>
+     */
     public static function permissions(RoleInterface $role): iterable
     {
+        /** @phpstan-ignore-next-line */
         return match ($role) {
             RoleEnum::MASTER => self::masterPermissions(),
             RoleEnum::ADMIN => self::adminPermissions(),
@@ -29,23 +37,33 @@ class RolePermissions implements RolePermissionsInterface
         };
     }
 
+    /**
+     * @return array<int, PermissionEnum>
+     */
     private static function masterPermissions(): array
     {
         return PermissionEnum::cases();
     }
 
+    /**
+     * @return Collection<int, PermissionEnum>
+     */
     private static function adminPermissions(): iterable
     {
-        $permissions = PermissionEnum::filter([
-            PermissionEnum::MASTER_VIEW,
-            PermissionEnum::MASTER_CREATE,
-            PermissionEnum::MASTER_UPDATE,
-            PermissionEnum::MASTER_DELETE,
-        ]);
-
-        return collect($permissions);
+        /** @phpstan-ignore-next-line */
+        return collect(
+            PermissionEnum::filter([
+                PermissionEnum::MASTER_VIEW,
+                PermissionEnum::MASTER_CREATE,
+                PermissionEnum::MASTER_UPDATE,
+                PermissionEnum::MASTER_DELETE,
+            ])
+        );
     }
 
+    /**
+     * @return Collection<int, PermissionEnum>
+     */
     private static function accountantPermissions(): iterable
     {
         return collect([
@@ -74,19 +92,25 @@ class RolePermissions implements RolePermissionsInterface
         ]);
     }
 
+    /**
+     * @return Collection<int, PermissionEnum>
+     */
     private static function contractorPermissions(): iterable
     {
-        return [[
-                    PermissionEnum::CUSTOMER_VIEW,
-                    PermissionEnum::PROJECT_VIEW,
-                    PermissionEnum::PRODUCT_CREATE,
-                    PermissionEnum::PROJECT_UPDATE,
-                    PermissionEnum::INVOICE_VIEW,
-                    PermissionEnum::PRODUCT_VIEW,
-                    PermissionEnum::SERVICE_VIEW,
-                ]];
+        return collect([
+            PermissionEnum::CUSTOMER_VIEW,
+            PermissionEnum::PROJECT_VIEW,
+            PermissionEnum::PRODUCT_CREATE,
+            PermissionEnum::PROJECT_UPDATE,
+            PermissionEnum::INVOICE_VIEW,
+            PermissionEnum::PRODUCT_VIEW,
+            PermissionEnum::SERVICE_VIEW,
+        ]);
     }
 
+    /**
+     * @return Collection<int, PermissionEnum>
+     */
     private static function customerPermissions(): iterable
     {
         return collect([

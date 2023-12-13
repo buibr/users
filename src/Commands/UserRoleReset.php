@@ -13,12 +13,12 @@ class UserRoleReset extends Command
 
     protected $description = 'Reset role for specified user';
 
-    public function handle()
+    public function handle(): int
     {
         $userIdentifier = $this->argument('user');
         $role = $this->argument('role');
 
-        /** @var User $user */
+        /** @var ?User $user */
         $user = User::where('id', $userIdentifier)->orWhere('email', $userIdentifier)->first();
 
         if ($user) {

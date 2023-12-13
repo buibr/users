@@ -10,6 +10,9 @@ class UserFactory extends Factory
 {
     protected $model = \Bi\Users\Models\User::class;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         $data = [
@@ -21,6 +24,7 @@ class UserFactory extends Factory
         ];
 
         if (config('bi-users.account.enable')) {
+            /** @phpstan-ignore-next-line  */
             $data['account_id'] = Account::factory()->create()->id;
         }
 

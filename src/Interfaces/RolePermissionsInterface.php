@@ -2,9 +2,8 @@
 
 namespace Bi\Users\Interfaces;
 
-use Bi\Users\Enums\RoleEnum;
-
 interface RolePermissionsInterface
 {
+    /** @return PermissionInterface[] */
     public static function permissions(RoleInterface $role): iterable;
 }

@@ -3,6 +3,7 @@
 namespace Spatie\Permission\Commands;
 
 use Illuminate\Console\Command;
+use Spatie\Permission\Contracts\Permission;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Contracts\Permission as PermissionContract;
 
@@ -15,7 +16,7 @@ class CreateRole extends Command
 
     protected $description = 'Create a role';
 
-    public function handle()
+    public function handle(): void
     {
         $roleClass = app(RoleContract::class);
 
@@ -26,7 +27,8 @@ class CreateRole extends Command
         $this->info("Role `{$role->name}` created");
     }
 
-    protected function makePermissions($string = null): iterable
+    /** @return Permission[] */
+    protected function makePermissions(string $string = ''): iterable
     {
         if (empty($string)) {
             return [];
