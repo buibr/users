@@ -15,10 +15,10 @@
     "php": ">=8.2",
     "spatie/laravel-permission": "@dev",
     "spatie/laravel-medialibrary": "@dev",
-    "illuminate/auth": "^8.12|^9.0|^10.0",
-    "illuminate/container": "^8.12|^9.0|^10.0",
-    "illuminate/contracts": "^8.12|^9.0|^10.0",
-    "illuminate/database": "^8.12|^9.0|^10.0",
+    "illuminate/auth": "*",
+    "illuminate/container": "*",
+    "illuminate/contracts": "*",
+    "illuminate/database": "*",
     "buibr/helpers": "^1.0.1"
   },
   "autoload": {
@@ -36,7 +36,6 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^10.4@dev",
-    "orchestra/testbench": "dev-develop",
     "phpstan/phpstan": "1.11.x-dev",
     "larastan/larastan": "^2.0"
   },
