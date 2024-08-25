@@ -14,7 +14,7 @@
   "require": {
     "php": ">=8.2",
     "spatie/laravel-permission": "@dev",
-    "spatie/laravel-medialibrary": "@dev",
+    "spatie/laravel-medialibrary": "^11.9",
     "illuminate/auth": "*",
     "illuminate/container": "*",
     "illuminate/contracts": "*",
