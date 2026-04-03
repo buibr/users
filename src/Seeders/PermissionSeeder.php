@@ -2,11 +2,9 @@
 
 namespace Bi\Users\Seeders;
 
-use Exception;
 use Bi\Users\Enums\RoleEnum;
 use Illuminate\Database\Seeder;
 use Bi\Users\Exception\BiException;
-use Illuminate\Support\Facades\Log;
 use Bi\Users\Interfaces\RoleInterface;
 use Spatie\Permission\PermissionRegistrar;
 use Bi\Users\Interfaces\PermissionInterface;
@@ -126,32 +124,22 @@ class PermissionSeeder extends Seeder
     /** @param PermissionInterface[] $permissions */
     private function doConnect(SpatieRole $role, iterable $permissions)
     {
-        $this->command->info('ROLE: ' . $role->name);
+        foreach ($permissions as $i => $permission) {
+            $permissionObject = null;
 
-        try {
-            foreach ($permissions as $i => $permission) {
-                $permissionObject = null;
-
-                if (is_string($permission)) {
-                    $permissionObject = SpatiePermission::findByName($permission);
-                }
-
-                if (my_is_enum($permission)) {
-                    $permissionObject = $permission->getObject();
-                }
-
-                if (!is_a($permissionObject, SpatiePermission::class)) {
-                    throw new BiException('Invalid permission name');
-                }
-
-                $this->command->info('  - PERMISSION: ' . $permissionObject->name);
-
-                $role->givePermissionTo($permissionObject);
+            if (is_string($permission)) {
+                $permissionObject = SpatiePermission::findByName($permission);
             }
-        } catch (Exception $e) {
-            Log::critical($e->getMessage());
 
-            $this->command->error('  - ERROR: ' . $e->getMessage());
+            if (my_is_enum($permission)) {
+                $permissionObject = $permission->getObject();
+            }
+
+            if (!is_a($permissionObject, SpatiePermission::class)) {
+                throw new BiException('Invalid permission name');
+            }
+
+            $role->givePermissionTo($permissionObject);
         }
     }
 
